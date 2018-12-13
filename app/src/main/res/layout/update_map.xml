@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/edtUpdateKinDo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kinh độ"
+            android:inputType="number"
+            android:imeOptions="actionNext"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <EditText
+            android:id="@+id/edtUpdateViDo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Vĩ độ"
+            android:inputType="number"
+            android:imeOptions="actionDone"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/edtUpdateTen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên"
+            android:inputType="number"
+            android:imeOptions="actionNext"/>
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>
