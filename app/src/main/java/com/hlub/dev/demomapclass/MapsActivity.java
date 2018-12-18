@@ -40,7 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -57,25 +57,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         vitriList = mapDAO.getAllViTri();
-        for (Vitri vitri : vitriList) {
+        for (final Vitri vitri : vitriList) {
             LatLng sydney = new LatLng(vitri.getKinhdo(), vitri.getVido());
-            mMap.addMarker(new MarkerOptions().position(sydney).title(vitri.getTitle()));
+            mMap.addMarker(new MarkerOptions().position(sydney).title(String.valueOf(vitri.getId())));//set title theo id
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
         }
+
+        //lay vi tri theo title cua marker
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                //tim vi tri theo kinh do, vi do
-                LatLng lg = marker.getPosition();
-                Vitri vitri = mapDAO.getVitri(lg.longitude, lg.latitude);
+                Vitri vitri = mapDAO.getViTriById(marker.getTitle());
                 if (vitri != null) {
                     diaLogSuaXoa(vitri, marker);
-                    Toast.makeText(MapsActivity.this, "" + vitri.getId() + "/ " + vitri.getTitle() + " / " + vitri.getKinhdo() + "/ " + vitri.getVido(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
         });
-
     }
 
     //nhan vao marker -> dialog sua/xoa
@@ -90,7 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (mapDAO.delete(vitri) > 0) {
                     marker.remove();
                     Toast.makeText(MapsActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                    onMapReady(mMap);
 
                 }
             }
@@ -124,11 +122,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 vitri.setKinhdo(Long.parseLong(edtUpdateKinDo.getText().toString()));
-                vitri.setVido(Long.parseLong(edtUpdateKinDo.getText().toString()));
+                vitri.setVido(Long.parseLong(edtUpdateViDo.getText().toString()));
                 vitri.setTitle(edtUpdateTen.getText().toString());
                 mapDAO.updateMap(vitri);
-                LatLng lg = new LatLng(Long.parseLong(edtUpdateKinDo.getText().toString()),
-                        Long.parseLong(edtUpdateKinDo.getText().toString()));
+                LatLng lg = new LatLng(vitri.getKinhdo(), vitri.getVido());
+                marker.remove();
                 marker.setPosition(lg);
                 Toast.makeText(MapsActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                 onMapReady(mMap);

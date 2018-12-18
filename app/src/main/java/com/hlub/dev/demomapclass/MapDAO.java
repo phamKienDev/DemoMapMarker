@@ -23,8 +23,8 @@ public class MapDAO implements Constant {
         values.put(COLUMN_KINHDO, viTri.getKinhdo());
         values.put(COLUMN_VIDO, viTri.getVido());
         Log.d("sql", CREATE_TABLE);
-        long id=sqLiteDatabase.insert(TABLE, null, values);
-        Log.d("id",id+"");
+        long id = sqLiteDatabase.insert(TABLE, null, values);
+        Log.d("id", id + "");
         return id;
     }
 
@@ -34,11 +34,11 @@ public class MapDAO implements Constant {
         values.put(COLUMN_KINHDO, viTri.getKinhdo());
         values.put(COLUMN_VIDO, viTri.getVido());
 
-        long update= sqLiteDatabase.update(TABLE,
+        long update = sqLiteDatabase.update(TABLE,
                 values,
                 COLUMN_ID + " =?",
                 new String[]{String.valueOf(viTri.getId())});
-        Log.d("update",update+"");
+        Log.d("update", update + "");
         return update;
     }
 
@@ -48,8 +48,8 @@ public class MapDAO implements Constant {
 
 
     public Vitri getVitri(double kinh, double vi) {
-        Vitri viTri =new Vitri();
-        String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KINHDO + " = " + kinh + " AND " + COLUMN_VIDO + " = " + vi;
+        Vitri viTri = new Vitri();
+        String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KINHDO + " = d" + kinh + " AND " + COLUMN_VIDO + " = " + vi;
         Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
         Log.d("sql", sql);
         if (cursor.moveToFirst() && cursor != null) {
@@ -79,15 +79,17 @@ public class MapDAO implements Constant {
         return viTris;
     }
 
-    public Vitri getViTriByTen(String ten) {
+
+    public Vitri getViTriById(String id) {
         Vitri viTri = null;
         Cursor cursor = sqLiteDatabase.query(TABLE,
-                new String[]{COLUMN_TITLE, COLUMN_KINHDO, COLUMN_VIDO},
-                COLUMN_TITLE + "=?",
-                new String[]{ten},
+                new String[]{COLUMN_ID, COLUMN_TITLE, COLUMN_KINHDO, COLUMN_VIDO},
+                COLUMN_ID + "=?",
+                new String[]{id},
                 null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             viTri = new Vitri();
+            viTri.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_ID)));
             viTri.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
             viTri.setKinhdo(cursor.getLong(cursor.getColumnIndex(COLUMN_KINHDO)));
             viTri.setVido(cursor.getLong(cursor.getColumnIndex(COLUMN_VIDO)));
@@ -97,4 +99,5 @@ public class MapDAO implements Constant {
 
 
     }
+
 }

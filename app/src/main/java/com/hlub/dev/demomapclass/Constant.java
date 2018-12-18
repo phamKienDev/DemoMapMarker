@@ -9,7 +9,7 @@ public interface Constant {
     String COLUMN_VIDO = "ViDo";
 
     String CREATE_TABLE = " CREATE TABLE " + TABLE + " ( " +
-            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL  , " +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , " +
             COLUMN_TITLE + " VARCHAR(50) NOT NULL , " +
             COLUMN_KINHDO + " LONG NOT NULL, " +
             COLUMN_VIDO + " LONG NOT NULL " +
